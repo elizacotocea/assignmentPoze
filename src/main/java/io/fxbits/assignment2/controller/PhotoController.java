@@ -1,14 +1,14 @@
 package io.fxbits.assignment2.controller;
 
 import io.fxbits.assignment2.entities.Photo;
+import io.fxbits.assignment2.entities.PhotoDTO;
 import io.fxbits.assignment2.entities.User;
 import io.fxbits.assignment2.service.PhotoService;
 import io.fxbits.assignment2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @RestController
@@ -16,7 +16,7 @@ public class PhotoController {
     @Autowired
     private PhotoService photoService;
 
-    @GetMapping("/photos")
+    @GetMapping("/")
     List<Photo> hello(){
         return photoService.findAllPhotos();
     }
@@ -24,5 +24,20 @@ public class PhotoController {
     @PostMapping(value = "/photos", consumes = "application/json")
     void save(@RequestBody Photo photo) {
         photoService.savePhoto(photo);
+    }
+
+    @RequestMapping(value = "/photos", params = "page")
+    List<PhotoDTO> photosPaginated(@RequestParam("page") int page){
+        return photoService.getPhotosPaginated(page);
+    }
+
+    @RequestMapping(value = "/photos", params = "venue")
+    List<PhotoDTO> photosByVenue(@RequestParam("venue") String venue){
+        return photoService.findPhotosByVenue(venue);
+    }
+
+    @RequestMapping(value = "/photos", params = "idUser")
+    List<PhotoDTO> photosByVenue(@RequestParam("idUser") Long idUser){
+        return photoService.findPhotosByUser(idUser);
     }
 }
