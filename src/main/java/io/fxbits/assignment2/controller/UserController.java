@@ -7,11 +7,13 @@ import io.fxbits.assignment2.repository.PhotoRepository;
 import io.fxbits.assignment2.repository.UserRepository;
 import io.fxbits.assignment2.service.PhotoService;
 import io.fxbits.assignment2.service.UserService;
+import io.fxbits.assignment2.validators.ValidatorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -21,7 +23,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping(value = "/users", consumes = "application/json")
-    void save(@RequestBody User user) {
+    void save(@RequestBody @Valid User user) throws ValidatorException {
         userService.saveUser(user);
     }
 

@@ -5,6 +5,7 @@ import io.fxbits.assignment2.entities.PhotoDTO;
 import io.fxbits.assignment2.entities.User;
 import io.fxbits.assignment2.service.PhotoService;
 import io.fxbits.assignment2.service.UserService;
+import io.fxbits.assignment2.validators.ValidatorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -17,12 +18,12 @@ public class PhotoController {
     private PhotoService photoService;
 
     @GetMapping("/")
-    List<Photo> hello(){
+    List<Photo> findAllPhotos(){
         return photoService.findAllPhotos();
     }
 
     @PostMapping(value = "/photos", consumes = "application/json")
-    void save(@RequestBody Photo photo) {
+    void save(@RequestBody Photo photo) throws ValidatorException {
         photoService.savePhoto(photo);
     }
 
@@ -37,7 +38,7 @@ public class PhotoController {
     }
 
     @RequestMapping(value = "/photos", params = "idUser")
-    List<PhotoDTO> photosByVenue(@RequestParam("idUser") Long idUser){
+    List<PhotoDTO> photosByIdUser(@RequestParam("idUser") Long idUser){
         return photoService.findPhotosByUser(idUser);
     }
 }

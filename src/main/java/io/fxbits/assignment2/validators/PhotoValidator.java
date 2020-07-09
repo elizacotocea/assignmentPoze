@@ -2,7 +2,9 @@ package io.fxbits.assignment2.validators;
 
 import io.fxbits.assignment2.entities.Photo;
 import io.fxbits.assignment2.entities.PhotoType;
+import org.springframework.stereotype.Component;
 
+@Component
 public class PhotoValidator implements Validator<Photo>{
 
     @Override

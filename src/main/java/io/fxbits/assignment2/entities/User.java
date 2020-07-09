@@ -8,6 +8,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
@@ -39,9 +40,11 @@ public class User implements Serializable {
     @Column(name = "lastName",nullable = false)
     private String lastName;
 
+    @NotNull
     @Column(name = "username",nullable = false)
     private String username;
 
+    @NotNull
     @Column(name = "password",nullable = false)
     private String password;
 
