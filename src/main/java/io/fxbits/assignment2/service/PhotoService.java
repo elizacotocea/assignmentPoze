@@ -4,6 +4,8 @@ import io.fxbits.assignment2.entities.Photo;
 import io.fxbits.assignment2.entities.PhotoDTO;
 import io.fxbits.assignment2.entities.User;
 import io.fxbits.assignment2.repository.PhotoRepository;
+import io.fxbits.assignment2.validators.PhotoValidator;
+import io.fxbits.assignment2.validators.ValidatorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -17,6 +19,9 @@ import java.util.List;
 public class PhotoService {
     @Autowired
     private PhotoRepository photoRepository;
+
+    @Autowired
+    private PhotoValidator photoValidator;
 
     private List<PhotoDTO> toPhotoDTO(List<Photo> listPhoto){
         List<PhotoDTO> photoDTOList=new ArrayList<>();
@@ -35,7 +40,8 @@ public class PhotoService {
         return toPhotoDTO(photoRepository.findAllByVenue(venue));
     }
 
-    public void savePhoto(Photo photo){
+    public void savePhoto(Photo photo) throws ValidatorException {
+        photoValidator.validate(photo);
         photoRepository.save(photo);
     }
 
